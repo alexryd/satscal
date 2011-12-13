@@ -1,6 +1,8 @@
+import logging
 from tornado import gen
 from tornado.web import HTTPError, asynchronous
 
+from satscal.sats import parse_sats_bookings
 from satscal.web import SATSCalRequestHandler
 
 
@@ -11,10 +13,13 @@ class CurrentBookingsHandler(SATSCalRequestHandler):
         response = yield gen.Task(self.sats_request, 'booking/listcurrent')
 
         if response.error:
-            print 'Error:', response.error
-            raise HTTPError(500)
+            logging.warn('Failed to load a list of current bookings:', response.error)
+            raise HTTPError(response.error.code)
         else:
-            self.finish(response.body)
+            calendar = parse_sats_bookings(response.body)
+
+            self.set_header('Content-Type', 'text/calendar')
+            self.finish(calendar.as_string())
 
 
 handlers = [
