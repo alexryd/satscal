@@ -6,6 +6,11 @@ from satscal.sats import parse_sats_bookings
 from satscal.web import SATSCalRequestHandler
 
 
+class StartHandler(SATSCalRequestHandler):
+    def get(self):
+        self.render('start.html')
+
+
 class CurrentBookingsHandler(SATSCalRequestHandler):
     @asynchronous
     @gen.engine
@@ -23,5 +28,6 @@ class CurrentBookingsHandler(SATSCalRequestHandler):
 
 
 handlers = [
+    (r'/', StartHandler),
     (r'/bookings/current', CurrentBookingsHandler),
 ]

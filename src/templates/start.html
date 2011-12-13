@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Få dina SATS-bokningar i kalendern</h1>
+
+<form method="post" action="generate">
+<div class="field">
+    <label>
+        Användarnamn:
+        <input type="text" name="username"/>
+    </label>
+</div>
+<div class="field">
+    <label>
+        Lösenord:
+        <input type="password" name="password"/>
+    </label>
+</div>
+<div class="button-bar">
+    <input type="submit" value="Generera länk"/>
+</div>
+</form>
+{% end %}
