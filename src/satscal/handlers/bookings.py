@@ -1,5 +1,4 @@
 from tornado import gen
-from tornado.httpclient import AsyncHTTPClient
 from tornado.web import HTTPError, asynchronous
 
 from satscal.web import SATSCalRequestHandler
@@ -9,11 +8,7 @@ class CurrentBookingsHandler(SATSCalRequestHandler):
     @asynchronous
     @gen.engine
     def get(self):
-        token = self.get_argument('t')
-        url = 'http://api.sats.com/api/sv-SE/booking/listcurrent?atkn=' + token
-
-        client = AsyncHTTPClient()
-        response = yield gen.Task(client.fetch, url)
+        response = yield gen.Task(self.sats_request, 'booking/listcurrent')
 
         if response.error:
             print 'Error:', response.error
