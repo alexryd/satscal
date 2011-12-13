@@ -2,7 +2,7 @@ import os.path
 from tornado.options import define, options
 import tornado.web
 
-from satscal import handlers
+from satscal.handlers import handlers
 
 
 define('debug_mode', default=0, help='set to 1 to enable Tornado\'s debug mode', type=int)
@@ -19,4 +19,4 @@ class SATSCalApplication(tornado.web.Application):
             debug=bool(options.debug_mode),
         )
 
-        super(SATSCalApplication, self).__init__(handlers.all_handlers, **settings)
+        super(SATSCalApplication, self).__init__(handlers, **settings)
