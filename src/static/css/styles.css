@@ -50,3 +50,101 @@ table {
 }
 
 /*** END OF RESET STYLES ***/
+
+body {
+    background-color: #efefef;
+    padding: 20px;
+    font-family: 'HelveticaNeue', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #222;
+}
+
+h1 {
+    margin: 0 0 20px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+p {
+    margin: 10px 0;
+}
+
+a {
+    color: #579BFB;
+    text-decoration: none;
+}
+
+input,
+textarea,
+button {
+    font-family: 'HelveticaNeue', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+#wrap {
+    width: 500px;
+    margin: 40px auto 60px;
+    padding: 30px;
+    background-color: #fff;
+    -webkit-box-shadow: 0 1px 5px #ddd;
+    -moz-box-shadow: 0 1px 5px #ddd;
+    box-shadow: 0 1px 5px #ddd;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+}
+
+p.intro {
+    margin: 20px 0 30px;
+    font-size: 14px;
+}
+
+.auth-form {
+    margin: 40px 0;
+    padding: 20px 0;
+    border: 1px solid #eee;
+    border-width: 1px 0;
+}
+
+.auth-form .form-desc {
+    margin: 0 0 20px;
+    color: #333;
+}
+
+.auth-form .field {
+    position: relative;
+    margin-bottom: 10px;
+    padding-left: 100px;
+}
+
+.auth-form .field label {
+    position: absolute;
+    top: 5px;
+    left: 0;
+    font-weight: bold;
+    color: #444;
+}
+
+.auth-form .field input {
+    width: 390px;
+    margin: 0;
+    padding: 3px;
+    font-size: 14px;
+}
+
+.button-bar button {
+    float: right;
+    margin: 0;
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+.footnote {
+    margin-top: 20px;
+    font-size: 11px;
+    color: #666;
+}
+
+.breaker {
+    clear: both;
+}
