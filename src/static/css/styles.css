@@ -135,8 +135,45 @@ p.intro {
 .button-bar button {
     float: right;
     margin: 0;
-    padding: 6px 10px;
+    padding: 6px 14px;
+    background-color: #ff7000;
+    background-image: linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -o-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -moz-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -webkit-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -ms-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #FF6A00), color-stop(0.95, #FF9500));
+    -webkit-box-shadow: 0 1px 2px #bbb;
+    -moz-box-shadow: 0 1px 2px #bbb;
+    box-shadow: 0 1px 2px #bbb;
+    border: 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
     font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: #888 0 1px 1px;
+}
+
+.button-bar button:hover {
+    background-color: #ff8000;
+    background-image: linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -o-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -moz-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -webkit-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -ms-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #FF6A00), color-stop(0.95, #FFA024));
+}
+
+.button-bar button:active {
+    background-color: #d26a01;
+    background-image: linear-gradient(bottom, #EB5E00 5%, #E08300 95%);
+    background-image: -o-linear-gradient(bottom, #EB5E00 5%, #E08300 95%);
+    background-image: -moz-linear-gradient(bottom, #EB5E00 5%, #E08300 95%);
+    background-image: -webkit-linear-gradient(bottom, #EB5E00 5%, #E08300 95%);
+    background-image: -ms-linear-gradient(bottom, #EB5E00 5%, #E08300 95%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #EB5E00), color-stop(0.95, #E08300));
 }
 
 .footnote {
