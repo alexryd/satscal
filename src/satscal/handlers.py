@@ -30,7 +30,9 @@ class GenerateHandler(SATSCalRequestHandler):
         else:
             data = json.loads(response.body)
             if not data.get('Success', False):
-                raise HTTPError(401)
+                self.set_status(401)
+                self.render('auth_failed.html')
+                return
 
             self.render('generate.html',
                 calendar_url=self.get_calendar_url(data),
