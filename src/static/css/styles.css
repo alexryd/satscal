@@ -167,7 +167,7 @@ p.intro {
 
 a.subscribe {
     display: block;
-    margin: 40px 0;
+    margin: 40px 0 60px;
     padding: 20px;
     background-color: #ff7000;
     background-image: linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
@@ -197,6 +197,21 @@ a.subscribe:hover {
     background-image: -webkit-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
     background-image: -ms-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #FF6A00), color-stop(0.95, #FFA024));
+}
+
+.webcal-help {
+    margin: 40px 0;
+    padding: 10px;
+    background-color: #f8f8f8;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #555;
+}
+
+.webcal-help ul {
+    padding-left: 20px;
+    list-style-type: disc;
 }
 
 .breaker {
