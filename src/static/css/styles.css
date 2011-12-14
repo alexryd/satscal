@@ -145,6 +145,60 @@ p.intro {
     color: #666;
 }
 
+.user-box .profile-image {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin: -6px 10px 10px 0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.user-box .user-name {
+    margin: 6px 0 2px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.user-box .user-id {
+    color: #666;
+}
+
+a.subscribe {
+    display: block;
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #ff7000;
+    background-image: linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -o-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -moz-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -webkit-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -ms-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #FF6A00), color-stop(0.95, #FF9500));
+    -webkit-box-shadow: 0 1px 2px #888;
+    -moz-box-shadow: 0 1px 2px #888;
+    box-shadow: 0 1px 2px #888;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    text-shadow: #666 0 1px 1px;
+}
+
+a.subscribe:hover {
+    background-color: #ff8000;
+    background-image: linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -o-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -moz-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -webkit-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -ms-linear-gradient(bottom, #FF6A00 5%, #FFA024 95%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #FF6A00), color-stop(0.95, #FFA024));
+}
+
 .breaker {
     clear: both;
 }
