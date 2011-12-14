@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="user-box">
+{% if user_image_url %}
+    <a href="{{ user_image_url }}" target="_blank"><img src="{{ user_image_url }}" alt="{{ user_name }}" class="profile-image"/></a>
+{% end %}
+    <div class="user-name">{{ user_name }}</div>
+    <div class="user-id">{{ user_id }}</div>
+</div>
+
+<a href="{{ calendar_url }}">Prenumerera på dina bokningar</a>
+{% end %}
