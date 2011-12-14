@@ -25,7 +25,7 @@ class GenerateHandler(SATSCalRequestHandler):
         response = yield gen.Task(self.sats_request, uri, token=None)
 
         if response.error:
-            logging.warn('Failed to authenticate the user:', response.error)
+            logging.warn('Failed to authenticate the user: %s', response.error)
             raise HTTPError(response.error.code)
         else:
             data = json.loads(response.body)
@@ -76,10 +76,17 @@ class CurrentBookingsHandler(SATSCalRequestHandler):
         response = yield gen.Task(self.sats_request, 'booking/listcurrent')
 
         if response.error:
-            logging.warn('Failed to load a list of current bookings:', response.error)
+            logging.warn('Failed to load a list of current bookings: %s', response.error)
             raise HTTPError(response.error.code)
         else:
-            calendar = parse_sats_bookings(response.body)
+            data = json.loads(response.body)
+            if not isinstance(data, list):
+                logging.warn('Failed to load a list of current bookings: %s', data)
+                self.set_status(400)
+                self.render('load_bookings_failed.html')
+                return
+
+            calendar = parse_sats_bookings(data)
 
             self.set_header('Content-Type', 'text/calendar')
             self.finish(calendar.as_string())

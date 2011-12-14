@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from icalendar import Calendar, Event
-import json
 import pytz
 import re
 
@@ -9,7 +8,6 @@ TIMEZONE = pytz.timezone('Europe/Stockholm')
 
 
 def parse_sats_bookings(data):
-    data = json.loads(data)
     if not isinstance(data, list):
         raise Exception('Could not parse bookings data: %s' % data)
 
