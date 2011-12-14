@@ -1,3 +1,4 @@
+import logging
 from tornado.httpclient import AsyncHTTPClient
 from tornado.options import define, options
 from tornado.web import RequestHandler
@@ -45,6 +46,8 @@ class SATSCalRequestHandler(RequestHandler):
             user_agent='SATS/1.0 CFNetwork/548.0.4 Darwin/11.0.0',
         )
         all_kwargs.update(kwargs)
+
+        logging.debug('Sending request to %s', url)
 
         client = AsyncHTTPClient()
         client.fetch(url, callback, **all_kwargs)

@@ -30,6 +30,7 @@ class GenerateHandler(SATSCalRequestHandler):
         else:
             data = json.loads(response.body)
             if not data.get('Success', False):
+                logging.debug('Authentication response: %s', data)
                 self.set_status(401)
                 self.render('auth_failed.html')
                 return
