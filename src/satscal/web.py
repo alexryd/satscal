@@ -37,7 +37,7 @@ class SATSCalRequestHandler(RequestHandler):
         )
 
         if token:
-            url += '?atkn=' + urllib.quote(token)
+            url += ('&' if '?' in url else '?') + 'atkn=' + urllib.quote(token)
 
         all_kwargs = dict(
             user_agent='SATS/1.0 CFNetwork/548.0.4 Darwin/11.0.0',
