@@ -29,8 +29,14 @@ def parse_sats_booking(data):
     booking.add('summary', data.get('Class') or 'Bokning')
     booking.add('location', ('SATS ' + data.get('Center', '')).strip())
 
-    if 'Instructor' in data:
-        booking.add('description', u'Instrukt\u00f6r: ' + data['Instructor'])
+    description = ''
+    if 'Instructor' in data and data['Instructor']:
+        description += u'\n\nInstrukt\u00f6r: ' + data['Instructor']
+    if 'WIndex' in data and data['WIndex']:
+        description += u'\n\nDu har plats %d i k\u00f6n' % data['WIndex']
+
+    if description:
+        booking.add('description', description.strip())
 
     return booking
 
