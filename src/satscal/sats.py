@@ -19,15 +19,11 @@ def parse_sats_bookings(data):
 
 def parse_sats_booking(data):
     start_time = parse_sats_date_time(data['StartTime'])
+    booked = data.get('State') == 'Booked'
 
-    booking = Event()
-    booking.add('uid', data['ID'])
-    booking.add('dtstamp', start_time)
-    booking.add('dtstart', start_time)
-    booking.add('dtend', start_time + timedelta(minutes=data.get('Length', 0)))
-    booking.add('status', 'CONFIRMED' if data.get('State') == 'Booked' else 'TENTATIVE')
-    booking.add('summary', data.get('Class') or 'Bokning')
-    booking.add('location', ('SATS ' + data.get('Center', '')).strip())
+    summary = data.get('Class') or 'Bokning'
+    if not booked:
+        summary += u' \u2020\u2020'
 
     description = ''
     if 'Instructor' in data and data['Instructor']:
@@ -35,6 +31,14 @@ def parse_sats_booking(data):
     if 'WIndex' in data and data['WIndex']:
         description += u'\n\nDu har plats %d i k\u00f6n' % data['WIndex']
 
+    booking = Event()
+    booking.add('uid', data['ID'])
+    booking.add('dtstamp', start_time)
+    booking.add('dtstart', start_time)
+    booking.add('dtend', start_time + timedelta(minutes=data.get('Length', 0)))
+    booking.add('status', 'CONFIRMED' if booked else 'TENTATIVE')
+    booking.add('summary', summary)
+    booking.add('location', ('SATS ' + data.get('Center', '')).strip())
     if description:
         booking.add('description', description.strip())
 
