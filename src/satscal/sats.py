@@ -12,6 +12,7 @@ def parse_sats_bookings(data):
         raise Exception('Could not parse bookings data: %s' % data)
 
     calendar = Calendar()
+    calendar.add('x-wr-calname', 'SATS')
     for b in data:
         calendar.add_component(parse_sats_booking(b))
 
