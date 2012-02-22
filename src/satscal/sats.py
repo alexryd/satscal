@@ -32,7 +32,7 @@ def parse_sats_booking(data):
     if 'Instructor' in data and data['Instructor']:
         description += u'\n\nInstruktör: ' + data['Instructor']
     if 'WIndex' in data and data['WIndex']:
-        description += u'\n\nDu har plats %d i kön' % data['WIndex']
+        description += u'\n\nDu har plats %d på väntelistan' % data['WIndex']
 
     booking = Event()
     booking.add('uid', data['ID'])
