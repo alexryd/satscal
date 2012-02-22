@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import grp
 import os
 import pwd

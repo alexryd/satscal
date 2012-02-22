@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os.path
 from tornado.options import define, options
 import tornado.web

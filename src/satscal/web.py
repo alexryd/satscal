@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import logging
 from tornado.httpclient import AsyncHTTPClient
 from tornado.options import define, options

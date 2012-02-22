@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime, timedelta
 from icalendar import Calendar, Event
 import pytz
@@ -28,9 +30,9 @@ def parse_sats_booking(data):
 
     description = ''
     if 'Instructor' in data and data['Instructor']:
-        description += u'\n\nInstrukt\u00f6r: ' + data['Instructor']
+        description += u'\n\nInstruktör: ' + data['Instructor']
     if 'WIndex' in data and data['WIndex']:
-        description += u'\n\nDu har plats %d i k\u00f6n' % data['WIndex']
+        description += u'\n\nDu har plats %d i kön' % data['WIndex']
 
     booking = Event()
     booking.add('uid', data['ID'])
