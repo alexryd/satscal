@@ -78,7 +78,14 @@ a {
 input,
 textarea,
 button {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     font-family: 'HelveticaNeue', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+span.bold {
+    font-weight: bold;
 }
 
 #wrap {
@@ -126,7 +133,7 @@ p.intro {
 }
 
 .auth-form .field input {
-    width: 390px;
+    width: 400px;
     margin: 0;
     padding: 3px;
     font-size: 14px;
@@ -202,9 +209,17 @@ p.intro {
     color: #666;
 }
 
+input.calendar-url {
+    width: 100%;
+    margin: 40px 0 10px;
+    padding: 5px;
+    font-size: 16px;
+    color: #666;
+}
+
 a.subscribe {
     display: block;
-    margin: 40px 0 60px;
+    margin: 10px 0 60px;
     padding: 20px;
     background-color: #ff7000;
     background-image: linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
@@ -249,6 +264,12 @@ a.subscribe:hover {
 .webcal-help ul {
     padding-left: 20px;
     list-style-type: disc;
+}
+
+.webcal-help p.tip {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
 }
 
 .breaker {
