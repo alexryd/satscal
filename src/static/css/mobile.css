@@ -25,12 +25,7 @@ body {
     width: 100%;
 }
 
-input.calendar-url {
-    display: none;
-}
-
 a.subscribe {
-    margin-top: 20px;
     font-size: 14px;
 }
 

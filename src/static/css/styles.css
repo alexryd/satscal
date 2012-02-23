@@ -228,7 +228,7 @@ a.subscribe {
     background-image: -moz-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
     background-image: -webkit-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
     background-image: -ms-linear-gradient(bottom, #FF6A00 5%, #FF9500 95%);
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #FF6A00), color-stop(0.95, #FF9500));
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.05, #FF5A00), color-stop(0.95, #FF9500));
     -webkit-box-shadow: 0 1px 2px #888;
     -moz-box-shadow: 0 1px 2px #888;
     box-shadow: 0 1px 2px #888;
