@@ -1,0 +1,39 @@
+body {
+    padding: 10px;
+}
+
+#wrap {
+    width: auto;
+    margin: 10px auto 20px;
+    padding: 20px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.auth-form .field {
+    padding-top: 20px;
+    padding-left: 0;
+}
+
+.auth-form .field label {
+    top: 0;
+    left: 0;
+}
+
+.auth-form .field input {
+    width: 100%;
+}
+
+input.calendar-url {
+    display: none;
+}
+
+a.subscribe {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.webcal-help {
+    display: none;
+}
