@@ -91,7 +91,7 @@ class CurrentBookingsHandler(SATSCalRequestHandler):
             calendar = parse_sats_bookings(data)
 
             self.set_header('Content-Type', 'text/calendar')
-            self.finish(calendar.as_string())
+            self.finish(calendar.to_ical())
 
 
 handlers = [
