@@ -9,7 +9,7 @@ import urllib
 
 define('base_url', default='', help='prepend the given URL when constructing absolute URLs')
 define('google_analytics_tracking_number', default='', help='track visits to this site using the given tracking number')
-define('sats_api_base_url', default='http://api.sats.com/api', help='send SATS API requests to the given URL')
+define('sats_api_base_url', default='https://api.sats.com/api', help='send SATS API requests to the given URL')
 define('sats_api_default_locale', default='sv-SE', help='use the given locale with SATS API if none is specified')
 
 
