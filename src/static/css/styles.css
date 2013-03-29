@@ -277,6 +277,19 @@ a.subscribe:hover {
     clear: both;
 }
 
+#github-banner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 135px;
+    height: 135px;
+    overflow: hidden;
+    background: url(/static/imgs/github-banner.png) 0 0 no-repeat;
+    text-indent: 1000px;
+    white-space: nowrap;
+}
+
 @media screen and (max-width: 600px) {
     body {
         padding: 10px;
@@ -310,6 +323,12 @@ a.subscribe:hover {
     }
 
     .webcal-help {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 830px) {
+    #github-banner {
         display: none;
     }
 }
