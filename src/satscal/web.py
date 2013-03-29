@@ -29,7 +29,9 @@ class SATSCalRequestHandler(RequestHandler):
         return super(SATSCalRequestHandler, self).render_string(template_name, **all_kwargs)
 
     _ARG_DEFAULT = []
-    def sats_request(self, uri, callback, token=_ARG_DEFAULT, locale=None, **kwargs):
+    def sats_request(self, uri, callback, params=None, token=_ARG_DEFAULT, locale=None, api_version=2, **kwargs):
+        if params is None:
+            params = {}
         if token is self._ARG_DEFAULT:
             token = self.get_argument('t')
         if locale is None:
@@ -42,7 +44,12 @@ class SATSCalRequestHandler(RequestHandler):
         )
 
         if token:
-            url += ('&' if '?' in url else '?') + 'atkn=' + urllib.quote(token)
+            params['atkn'] = token
+        if api_version != 1:
+            params['apiver'] = api_version
+
+        if params:
+            url += '?' + urllib.urlencode(params, True)
 
         all_kwargs = dict(
             user_agent='SATS/1.0 CFNetwork/548.0.4 Darwin/11.0.0',

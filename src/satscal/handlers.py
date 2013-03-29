@@ -20,11 +20,16 @@ class GenerateHandler(SATSCalRequestHandler):
     @asynchronous
     @gen.engine
     def post(self):
-        username = self.get_argument('username')
-        password = self.get_argument('password')
+        username = self.get_argument('username').encode('utf-8')
+        password = self.get_argument('password').encode('utf-8')
 
-        uri = 'auth/login?password=%s&user=%s' % (urllib.quote(password), urllib.quote(username))
-        response = yield gen.Task(self.sats_request, uri, token=None)
+        params = dict(user=username, password=password)
+        response = yield gen.Task(
+            self.sats_request,
+            'auth/login',
+            params=params,
+            token=None
+        )
 
         if response.error:
             logging.warn('Failed to authenticate the user: %s', response.error)
