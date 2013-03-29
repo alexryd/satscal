@@ -52,7 +52,7 @@ class SATSCalRequestHandler(RequestHandler):
             url += '?' + urllib.urlencode(params, True)
 
         all_kwargs = dict(
-            user_agent='SATS/1.0 CFNetwork/548.0.4 Darwin/11.0.0',
+            user_agent='satscal.herokuapp.com',
         )
         all_kwargs.update(kwargs)
 
