@@ -210,12 +210,22 @@ p.intro {
     color: #666;
 }
 
-input.calendar-url {
-    width: 100%;
-    margin: 40px 0 10px;
-    padding: 5px;
-    font-size: 16px;
-    color: #666;
+.calendar-url-heading {
+    margin: 30px 0 4px;
+    font-weight: bold;
+}
+
+.calendar-url {
+    margin-bottom: 20px;
+    padding: 8px;
+    background-color: #eee;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 19px;
+    font-style: italic;
+    word-wrap: break-word;
 }
 
 a.subscribe {
