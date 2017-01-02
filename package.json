@@ -1,0 +1,19 @@
+{
+  "name": "satscal",
+  "version": "2.0.0",
+  "description": "Allows SATS members to generate iCalendars with the classes they've booked",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexryd/satscal.git"
+  },
+  "author": "Alexander Rydén",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexryd/satscal/issues"
+  },
+  "homepage": "https://github.com/alexryd/satscal#readme"
+}
