@@ -29,6 +29,8 @@ if (!isProduction) {
       target: 'http://localhost:3001'
     })
   })
+} else {
+  app.use('/build', express.static(path.resolve(__dirname, 'build')))
 }
 
 app.get('*', (req, res) => {
