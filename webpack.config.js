@@ -1,3 +1,5 @@
+import autoprefixer from 'autoprefixer'
+import flexbugs from 'postcss-flexbugs-fixes'
 import path from 'path'
 import webpack from 'webpack'
 
@@ -20,7 +22,7 @@ export default {
 
   resolve: {
     fallback: nodeModulesPath,
-    extensions: ['', '.css', '.scss', '.js', '.jsx', '.json'],
+    extensions: ['', '.css', '.scss', '.js', '.jsx'],
     alias: {
       app: path.resolve(__dirname, 'app')
     }
@@ -28,9 +30,31 @@ export default {
 
   module: {
     loaders: [
+      {
+        test: /\.scss$/,
+        loaders: [
+          'style',
+          'css?minimize&-autoprefixer',
+          'postcss-loader',
+          'sass'
+        ]
+      },
       {test: /\.js$|\.jsx$/, loader: 'babel', exclude: [nodeModulesPath]}
     ]
   },
+
+  postcss: [
+    flexbugs,
+    autoprefixer({
+      browsers: [
+        'last 2 versions',
+        'Android 4',
+        'iOS 8',
+        'ie 10',
+        'ie_mob 10'
+      ]
+    })
+  ],
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
