@@ -1,3 +1,6 @@
+import './styles/index'
+import 'react-mdl/extra/material.min.js'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 
