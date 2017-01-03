@@ -1,9 +1,23 @@
 import {Button, Cell, Grid, Spinner, Textfield} from 'react-mdl'
 import React from 'react'
+import {wrap} from 'tide'
 
 import './styles'
 
 const LoginForm = React.createClass({
+  propTypes: {
+    password: React.PropTypes.string,
+    username: React.PropTypes.string
+  },
+
+  onChangeUsername(e) {
+    this.props.tide.actions.login.setUsername(e.target.value)
+  },
+
+  onChangePassword(e) {
+    this.props.tide.actions.login.setPassword(e.target.value)
+  },
+
   render() {
     return (
       <form id='login-form'>
@@ -15,10 +29,19 @@ const LoginForm = React.createClass({
           </Cell>
 
           <Cell col={6} tablet={4} phone={4}>
-            <Textfield label='Användarnamn'/>
+            <Textfield
+              label='Användarnamn'
+              value={this.props.username}
+              onChange={this.onChangeUsername}
+            />
           </Cell>
           <Cell col={6} tablet={4} phone={4}>
-            <Textfield type='password' label='Lösenord'/>
+            <Textfield
+              type='password'
+              label='Lösenord'
+              value={this.props.password}
+              onChange={this.onChangePassword}
+            />
           </Cell>
 
           <Cell col={12} className='actions'>
@@ -33,4 +56,7 @@ const LoginForm = React.createClass({
   }
 })
 
-export default LoginForm
+export default wrap(LoginForm, {
+  'login.password': true,
+  'login.username': true
+})
