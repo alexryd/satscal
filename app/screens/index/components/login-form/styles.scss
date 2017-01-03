@@ -1,0 +1,15 @@
+#login-form {
+  .details {
+    font-size: 0.85rem;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .mdl-spinner {
+      margin-right: 1rem;
+    }
+  }
+}
