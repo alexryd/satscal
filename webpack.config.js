@@ -1,30 +1,30 @@
 import autoprefixer from 'autoprefixer'
 import flexbugs from 'postcss-flexbugs-fixes'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import path from 'path'
 import webpack from 'webpack'
 
 const nodeModulesPath = path.resolve(__dirname, 'node_modules')
 
 export default {
-  devtool: 'eval',
+  devtool: 'eval-source-map',
 
   entry: [
-    'webpack/hot/dev-server',
-    'webpack-dev-server/client?http://localhost:3001',
-    path.resolve(__dirname, 'app', 'main')
+    'webpack-hot-middleware/client?reload=true',
+    path.join(__dirname, 'app', 'main')
   ],
 
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js',
-    publicPath: '/build/'
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].js',
+    publicPath: '/'
   },
 
   resolve: {
     fallback: nodeModulesPath,
     extensions: ['', '.css', '.scss', '.js', '.jsx'],
     alias: {
-      app: path.resolve(__dirname, 'app')
+      app: path.join(__dirname, 'app')
     }
   },
 
@@ -57,9 +57,16 @@ export default {
   ],
 
   plugins: [
+    new HtmlWebpackPlugin({
+      template: 'app/index.tpl.html',
+      inject: 'body',
+      filename: 'index.html'
+    }),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify('development')
     })
   ]
 }

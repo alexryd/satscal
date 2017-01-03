@@ -1,66 +1,49 @@
 import express from 'express'
-import httpProxy from 'http-proxy'
-import {match, RouterContext} from 'react-router'
 import path from 'path'
-import React from 'react'
-import {renderToString} from 'react-dom/server'
+import webpack from 'webpack'
+import webpackHotMiddleware from 'webpack-hot-middleware'
+import webpackMiddleware from 'webpack-dev-middleware'
 
-import bundle from './server/bundle'
-import {routes} from './app/router'
+import config from './webpack.config'
 
-const isProduction = process.env.NODE_ENV === 'production'
-const port = isProduction ? process.env.PORT : 3000
-
-const proxy = httpProxy.createProxyServer()
-proxy.on('error', (err) => {
-  console.error(`Could not connect to the proxy: ${err}`)
-})
+const isDevelopment = process.env.NODE_ENV !== 'production'
+const port = isDevelopment ? 3000 : process.env.PORT
 
 const app = express()
 
-app.set('view engine', 'ejs')
-app.set('views', path.resolve(__dirname, 'server', 'views'))
+if (isDevelopment) {
+  const compiler = webpack(config)
+  const middleware = webpackMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+    contentBase: 'src',
+    stats: {
+      colors: true,
+      hash: false,
+      timings: true,
+      chunks: false,
+      chunkModules: false,
+      modules: false
+    }
+  })
 
-if (!isProduction) {
-  bundle()
+  app.use(middleware)
+  app.use(webpackHotMiddleware(compiler))
 
-  app.all('/build/*', (req, res) => {
-    proxy.web(req, res, {
-      target: 'http://localhost:3001'
-    })
+  app.get('*', (req, res) => {
+    res.write(middleware.filesystem.readFileSync(path.join(__dirname, 'dist', 'index.html')))
+    res.end()
   })
 } else {
-  app.use('/build', express.static(path.resolve(__dirname, 'build')))
+  app.use(express.static(path.join(__dirname, 'dist')))
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+  })
 }
 
-app.get('*', (req, res) => {
-  match(
-    {routes, location: req.url},
-    (err, redirectLocation, renderProps) => {
-      if (err) {
-        return res.status(500).send('Internal Server Error')
-      }
-      if (redirectLocation) {
-        return res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-      }
-
-      let markup = null
-
-      if (renderProps) {
-        markup = renderToString(<RouterContext {...renderProps}/>)
-      } else {
-        res.status(404)
-      }
-
-      return res.render('index', {markup})
-    }
-  )
-})
-
-app.listen(port, (err) => {
+app.listen(port, '0.0.0.0', (err) => {
   if (err) {
     console.error(err)
     return
   }
-  console.log(`Server running on port ${port}`)
+  console.info(`Server running on port ${port}`)
 })
