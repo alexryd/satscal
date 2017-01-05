@@ -8,6 +8,14 @@ class LoginActions extends Actions {
   setPassword(password) {
     this.mutate('login.password', password, {immediate: true})
   }
+
+  submit() {
+    if (this.get('login.loading')) {
+      return
+    }
+
+    this.mutate('login.loading', true)
+  }
 }
 
 export default LoginActions

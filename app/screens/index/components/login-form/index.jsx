@@ -6,8 +6,14 @@ import './styles'
 
 const LoginForm = React.createClass({
   propTypes: {
+    loading: React.PropTypes.bool,
     password: React.PropTypes.string,
     username: React.PropTypes.string
+  },
+
+  onSubmit(e) {
+    e.preventDefault()
+    this.props.tide.actions.login.submit()
   },
 
   onChangeUsername(e) {
@@ -20,7 +26,7 @@ const LoginForm = React.createClass({
 
   render() {
     return (
-      <form id='login-form'>
+      <form id='login-form' onSubmit={this.onSubmit}>
         <Grid>
           <Cell col={12} className='details'>
             Fyll i samma användarnamn och lösenord som du loggar in med på
@@ -33,6 +39,7 @@ const LoginForm = React.createClass({
               label='Användarnamn'
               value={this.props.username}
               onChange={this.onChangeUsername}
+              disabled={this.props.loading}
             />
           </Cell>
           <Cell col={6} tablet={4} phone={4}>
@@ -41,12 +48,13 @@ const LoginForm = React.createClass({
               label='Lösenord'
               value={this.props.password}
               onChange={this.onChangePassword}
+              disabled={this.props.loading}
             />
           </Cell>
 
           <Cell col={12} className='actions'>
-            <Spinner/>
-            <Button type='submit' raised colored>
+            {this.props.loading ? <Spinner/> : null}
+            <Button type='submit' raised colored disabled={this.props.loading}>
               Generera länk
             </Button>
           </Cell>
@@ -57,6 +65,7 @@ const LoginForm = React.createClass({
 })
 
 export default wrap(LoginForm, {
-  'login.password': true,
-  'login.username': true
+  'loading': 'login.loading',
+  'password': 'login.password',
+  'username': 'login.username'
 })
