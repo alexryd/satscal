@@ -28,7 +28,8 @@ apiRouter.post('/login', jsonParser, (req, res) => {
 
       res.json({
         user_name: result.user.name,
-        token
+        token,
+        image_url: `/image/${result.user.id}/${result.token.value}`
       })
     })
     .catch((error) => {

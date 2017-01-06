@@ -35,6 +35,20 @@ export class SatsApiClient {
   }
 }
 
+export class SatsImageClient {
+  constructor(token) {
+    this.token = token
+  }
+
+  get(userId) {
+    const req = superagent.get(`https://hfnapi.sats.com/api/Sats/members/${userId}/picture`)
+    req.accept('*/*')
+    req.set('User-Agent', 'SATSYou/5 (satscal.herokuapp.com)')
+    req.set('Cookie', `Auth-SatsElixia=${this.token}`)
+    return req
+  }
+}
+
 export default class SatsApi {
   constructor(token=null) {
     this.client = new SatsApiClient(token)

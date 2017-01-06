@@ -6,12 +6,14 @@ import webpackMiddleware from 'webpack-dev-middleware'
 
 import apiRouter from './api-router'
 import config from '../webpack.config'
+import imageRouter from './image-router'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const port = isDevelopment ? 3000 : process.env.PORT
 
 const app = express()
 app.use('/api', apiRouter)
+app.use(imageRouter)
 
 if (isDevelopment) {
   const compiler = webpack(config)
