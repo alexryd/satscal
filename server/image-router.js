@@ -4,7 +4,7 @@ import {SatsImageClient} from './sats-api'
 
 const imageRouter = express.Router()
 
-imageRouter.get('/image/:userId/:token', (req, res) => {
+imageRouter.get('/:userId/:token', (req, res) => {
   const client = new SatsImageClient(req.params.token)
   client.get(req.params.userId).pipe(res)
 })

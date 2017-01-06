@@ -13,7 +13,7 @@ const port = isDevelopment ? 3000 : process.env.PORT
 
 const app = express()
 app.use('/api', apiRouter)
-app.use(imageRouter)
+app.use('/image', imageRouter)
 
 if (isDevelopment) {
   const compiler = webpack(config)
