@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser'
 import express from 'express'
 
+import CryptoUtil from './crypto-util'
 import SatsApi from './sats-api'
 
 const apiRouter = express.Router()
@@ -23,9 +24,11 @@ apiRouter.post('/login', jsonParser, (req, res) => {
 
   api.authenticate(username, password)
     .then((result) => {
+      const token = CryptoUtil.encrypt(result.user.id, password)
+
       res.json({
-        user_id: result.user.id,
-        user_name: result.user.name
+        user_name: result.user.name,
+        token
       })
     })
     .catch((error) => {
