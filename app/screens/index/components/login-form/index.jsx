@@ -6,6 +6,7 @@ import './styles'
 
 const LoginForm = React.createClass({
   propTypes: {
+    error: React.PropTypes.string,
     loading: React.PropTypes.bool,
     password: React.PropTypes.string,
     username: React.PropTypes.string
@@ -24,6 +25,26 @@ const LoginForm = React.createClass({
     this.props.tide.actions.login.setPassword(e.target.value)
   },
 
+  renderError() {
+    const error = this.props.error
+    let errorMessage
+    if (error === 'invalid_username_or_password') {
+      errorMessage = 'Användarnamnet eller lösenordet du skrev in verkar vara felaktigt. Var god försök igen.'
+    } else if (error === 'unknown_error') {
+      errorMessage = 'Ett okänt fel uppstod. Var god försök igen.'
+    } else {
+      return null
+    }
+
+    return (
+      <Cell col={12}>
+        <div className='error'>
+          {errorMessage}
+        </div>
+      </Cell>
+    )
+  },
+
   render() {
     return (
       <form id='login-form' onSubmit={this.onSubmit}>
@@ -40,6 +61,7 @@ const LoginForm = React.createClass({
               value={this.props.username}
               onChange={this.onChangeUsername}
               disabled={this.props.loading}
+              error={this.props.error === 'missing_username' ? 'Ange ett användarnamn' : null}
             />
           </Cell>
           <Cell col={6} tablet={4} phone={4}>
@@ -49,6 +71,7 @@ const LoginForm = React.createClass({
               value={this.props.password}
               onChange={this.onChangePassword}
               disabled={this.props.loading}
+              error={this.props.error === 'missing_password' ? 'Ange ett lösenord' : null}
             />
           </Cell>
 
@@ -58,6 +81,8 @@ const LoginForm = React.createClass({
               Generera länk
             </Button>
           </Cell>
+
+          {this.renderError()}
         </Grid>
       </form>
     )
@@ -65,6 +90,7 @@ const LoginForm = React.createClass({
 })
 
 export default wrap(LoginForm, {
+  'error': 'login.error',
   'loading': 'login.loading',
   'password': 'login.password',
   'username': 'login.username'

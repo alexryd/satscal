@@ -14,21 +14,29 @@ class LoginActions extends Actions {
     const username = this.get('login.username')
     const password = this.get('login.password')
 
-    if (this.get('login.loading') || !username || !password) {
+    if (this.get('login.loading')) {
+      return
+    } else if (!username) {
+      this.mutate('login.error', 'missing_username')
+      return
+    } else if (!password) {
+      this.mutate('login.error', 'missing_password')
       return
     }
 
     this.mutate('login.loading', true)
+    this.mutate('login.error', null)
 
     superagent
       .post('/api/login')
       .send({username, password})
-      .then((result) => {
-        console.log('Success!', result)
+      .then((response) => {
+        console.log('Success!', response)
         this.mutate('login.loading', false)
       })
       .catch((error) => {
-        console.error('Something went wrong:', error.response.body)
+        const errorString = error.status === 401 ? 'invalid_username_or_password' : 'unknown_error'
+        this.mutate('login.error', errorString)
         this.mutate('login.loading', false)
       })
   }

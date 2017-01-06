@@ -5,6 +5,8 @@ export default Record({
     username: '',
     password: '',
 
-    loading: false
+    loading: false,
+
+    error: null
   })
 })
