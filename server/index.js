@@ -33,13 +33,13 @@ if (isDevelopment) {
   app.use(middleware)
   app.use(webpackHotMiddleware(compiler))
 
-  app.get('*', (req, res) => {
+  app.get('/', (req, res) => {
     res.write(middleware.filesystem.readFileSync(path.join(__dirname, 'dist', 'index.html')))
     res.end()
   })
 } else {
   app.use(express.static(path.join(__dirname, 'dist')))
-  app.get('*', (req, res) => {
+  app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'))
   })
 }
