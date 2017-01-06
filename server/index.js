@@ -5,6 +5,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackMiddleware from 'webpack-dev-middleware'
 
 import apiRouter from './api-router'
+import calendarRouter from './calendar-router'
 import config from '../webpack.config'
 import imageRouter from './image-router'
 
@@ -13,6 +14,7 @@ const port = isDevelopment ? 3000 : process.env.PORT
 
 const app = express()
 app.use('/api', apiRouter)
+app.use('/cal', calendarRouter)
 app.use('/img', imageRouter)
 
 if (isDevelopment) {

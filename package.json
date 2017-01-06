@@ -28,6 +28,7 @@
     "css-loader": "^0.26.1",
     "express": "^4.14.0",
     "html-webpack-plugin": "^2.25.0",
+    "ical-generator": "^0.2.9",
     "immutable": "^3.8.1",
     "node-sass": "^4.1.1",
     "postcss-flexbugs-fixes": "^2.1.0",
