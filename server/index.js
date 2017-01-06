@@ -4,12 +4,14 @@ import webpack from 'webpack'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackMiddleware from 'webpack-dev-middleware'
 
-import config from './webpack.config'
+import apiRouter from './api-router'
+import config from '../webpack.config'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const port = isDevelopment ? 3000 : process.env.PORT
 
 const app = express()
+app.use('/api', apiRouter)
 
 if (isDevelopment) {
   const compiler = webpack(config)
