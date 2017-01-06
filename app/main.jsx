@@ -3,7 +3,21 @@ import 'react-mdl/extra/material.min.js'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {Component as TideComponent} from 'tide'
 
-import AppRouter from './router'
+import AppScreen from './screens/app'
+import Tide from './tide'
 
-ReactDOM.render(<AppRouter/>, document.getElementById('root'))
+const tide = new Tide()
+
+if (process.env.NODE_ENV !== 'production') {
+  tide.enableLogging({actions: true, state: true, components: true})
+}
+
+const appScreen = (
+  <TideComponent impure tide={tide} currentScreen='currentScreen'>
+    <AppScreen/>
+  </TideComponent>
+)
+
+ReactDOM.render(appScreen, document.getElementById('root'))

@@ -36,7 +36,6 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-mdl": "^1.9.0",
-    "react-router": "^3.0.0",
     "rimraf": "^2.5.4",
     "sass-loader": "^4.1.1",
     "style-loader": "^0.13.1",

@@ -1,6 +1,8 @@
 import {Map, Record} from 'immutable'
 
 export default Record({
+  currentScreen: 'login',
+
   login: Map({
     username: '',
     password: '',
