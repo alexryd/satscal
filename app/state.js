@@ -10,5 +10,11 @@ export default Record({
     loading: false,
 
     error: null
+  }),
+
+  link: Map({
+    name: '',
+    imageUrl: null,
+    token: null
   })
 })

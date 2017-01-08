@@ -1,0 +1,16 @@
+#link-screen {
+  width: 100%;
+
+  .mdl-card {
+    &__title {
+      height: 15rem;
+      background-position: center;
+      background-size: cover;
+      text-shadow: 0px 0px 5px #fff;
+    }
+
+    &__supporting-text {
+      width: auto;
+    }
+  }
+}

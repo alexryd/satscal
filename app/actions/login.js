@@ -31,8 +31,15 @@ class LoginActions extends Actions {
       .post('/api/login')
       .send({username, password})
       .then((response) => {
-        console.log('Success!', response)
-        this.mutate('login.loading', false)
+        const data = response.body
+        this.updateState((state) => {
+          return state
+            .setIn(['login', 'loading'], false)
+            .setIn(['link', 'name'], data.user_name)
+            .setIn(['link', 'imageUrl'], data.image_url)
+            .setIn(['link', 'token'], data.token)
+            .set('currentScreen', 'link')
+        })
       })
       .catch((error) => {
         const errorString = error.status === 401 ? 'invalid_username_or_password' : 'unknown_error'

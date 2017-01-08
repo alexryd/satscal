@@ -2,6 +2,7 @@ import {Cell, Grid} from 'react-mdl'
 import React from 'react'
 
 import IndexScreen from '../index'
+import LinkScreen from '../link'
 
 import './styles'
 
@@ -11,9 +12,12 @@ const AppScreen = React.createClass({
   },
 
   render() {
+    const currentScreen = this.props.currentScreen
     let screen = null
-    if (this.props.currentScreen === 'login') {
+    if (currentScreen === 'login') {
       screen = <IndexScreen/>
+    } else if (currentScreen === 'link') {
+      screen = <LinkScreen/>
     }
 
     return (
