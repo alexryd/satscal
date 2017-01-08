@@ -1,1 +1,1 @@
-web: NODE_ENV=production node start
+web: NODE_ENV=production npm start
