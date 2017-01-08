@@ -42,6 +42,14 @@ class AppActions extends Actions {
       })
     }
   }
+
+  clearStoredLinkState() {
+    try {
+      window.sessionStorage.removeItem(LINK_STATE_KEY)
+      window.sessionStorage.removeItem(LINK_STATE_TIMESTAMP_KEY)
+    } catch(e) {
+    }
+  }
 }
 
 export default AppActions
