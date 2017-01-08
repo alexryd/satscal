@@ -22,8 +22,12 @@ apiRouter.post('/login', jsonParser, (req, res) => {
     return res.status(400).json({error: 'missing_password'})
   }
 
+  console.info(`Login requested for username "${username}"`)
+
   api.authenticate(username, password)
     .then((result) => {
+      console.info(`Successfully authenticated user with ID ${result.user.id}`)
+
       const token = CryptoUtil.encrypt(result.user.id, password)
       if (!token) {
         console.error('No token was returned after encrypting the userId and password')
@@ -38,9 +42,10 @@ apiRouter.post('/login', jsonParser, (req, res) => {
     })
     .catch((error) => {
       if (error.status === 401) {
+        console.log(`Wrong password supplied for username "${username}"`)
         res.status(401).json({error: 'invalid_username_or_password'})
       } else {
-        console.error(`Server returned an unknown response with status code ${error.status}:`,
+        console.error(`Authentication failed with status code ${error.status}:`,
           error.response.body)
         res.status(500).json({error: 'internal_server_error'})
       }

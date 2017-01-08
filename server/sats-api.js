@@ -23,6 +23,7 @@ export class SatsApiClient {
       req.set('Authorization', `Bearer ${this.token}`)
     }
 
+    console.log(`${method.toUpperCase()} https://www.sats.se/sats-api/se${uri}`)
     return req
   }
 
@@ -45,6 +46,7 @@ export class SatsImageClient {
     req.accept('*/*')
     req.set('User-Agent', 'SATSYou/5 (satscal.herokuapp.com)')
     req.set('Cookie', `Auth-SatsElixia=${this.token}`)
+    console.log(`GET https://hfnapi.sats.com/api/Sats/members/${userId}/picture`)
     return req
   }
 }
