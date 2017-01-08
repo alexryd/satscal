@@ -64,7 +64,7 @@ const LinkScreen = React.createClass({
           <ul>
             <li>
               <a
-                href='http://www.apple.com/findouthow/mac/#subscribeical'
+                href='https://support.apple.com/kb/ph11523?locale=sv_SE'
                 target='_blank'
               >
                 Apple iCal
@@ -72,7 +72,7 @@ const LinkScreen = React.createClass({
             </li>
             <li>
               <a
-                href='http://support.google.com/calendar/bin/answer.py?hl=en&amp;answer=37100'
+                href='https://support.google.com/calendar/answer/37100?hl=sv'
                 target='_blank'
               >
                 Google Calendar
@@ -80,7 +80,7 @@ const LinkScreen = React.createClass({
             </li>
             <li>
               <a
-                href='http://office.microsoft.com/en-us/outlook-help/view-and-subscribe-to-internet-calendars-HA010167325.aspx'
+                href='https://support.office.com/sv-se/article/Importera-och-prenumerera-på-kalendrar-i-Outlook-com-eller-Outlook-på-webben-CFF1429C-5AF6-41EC-A5B4-74F2C278E98C'
                 target='_blank'
               >
                 Microsoft Outlook
