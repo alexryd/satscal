@@ -26,8 +26,7 @@ config.plugins = [
   }),
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-    'GOOGLE_ANALYTICS_TRACKING_NUMBER': JSON.stringify(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER),
-    'TOKEN_ENCRYPTION_KEY': JSON.stringify(process.env.TOKEN_ENCRYPTION_KEY)
+    'GOOGLE_ANALYTICS_TRACKING_NUMBER': JSON.stringify(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER)
   })
 ]
 

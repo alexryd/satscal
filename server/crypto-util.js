@@ -57,7 +57,10 @@ const CryptoUtil = {
   },
 
   getKey: (salt) => {
-    return crypto.pbkdf2Sync(TOKEN_ENCRYPTION_KEY, salt, 2145, 32, 'sha512')
+    const key = process.env.NODE_ENV === 'production' ?
+                process.env.TOKEN_ENCRYPTION_KEY :
+                'development'
+    return crypto.pbkdf2Sync(key, salt, 2145, 32, 'sha512')
   }
 }
 
