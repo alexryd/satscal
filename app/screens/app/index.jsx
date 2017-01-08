@@ -8,7 +8,12 @@ import './styles'
 
 const AppScreen = React.createClass({
   propTypes: {
-    currentScreen: React.PropTypes.string
+    currentScreen: React.PropTypes.string,
+    tide: React.PropTypes.object
+  },
+
+  componentWillMount() {
+    this.props.tide.actions.app.loadStoredLinkState()
   },
 
   render() {

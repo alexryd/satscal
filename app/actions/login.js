@@ -40,6 +40,8 @@ class LoginActions extends Actions {
             .setIn(['link', 'token'], data.token)
             .set('currentScreen', 'link')
         })
+
+        this.getActions('app').storeLinkState()
       })
       .catch((error) => {
         const errorString = error.status === 401 ? 'invalid_username_or_password' : 'unknown_error'
