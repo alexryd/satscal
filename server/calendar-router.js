@@ -11,6 +11,11 @@ calendarRouter.get('/:token', (req, res) => {
   const {userId, password} = CryptoUtil.decrypt(token)
   const api = new SatsApi()
 
+  if (!userId || !password) {
+    console.error('Empty userId or password returned after decrypting', {userId, password})
+    return res.sendStatus(500)
+  }
+
   api.authenticate(userId, password)
     .then(() => {
       api.getActivities()

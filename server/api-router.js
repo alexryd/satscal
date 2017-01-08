@@ -25,6 +25,10 @@ apiRouter.post('/login', jsonParser, (req, res) => {
   api.authenticate(username, password)
     .then((result) => {
       const token = CryptoUtil.encrypt(result.user.id, password)
+      if (!token) {
+        console.error('No token was returned after encrypting the userId and password')
+        return res.status(500).json({error: 'internal_server_error'})
+      }
 
       res.json({
         user_name: result.user.name,
