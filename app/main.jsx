@@ -8,6 +8,10 @@ import {Component as TideComponent} from 'tide'
 import AppScreen from './screens/app'
 import Tide from './tide'
 
+if (GOOGLE_ANALYTICS_TRACKING_NUMBER) {
+  require('./utils/google-analytics')
+}
+
 const tide = new Tide()
 
 if (process.env.NODE_ENV !== 'production') {
