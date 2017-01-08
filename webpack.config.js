@@ -67,7 +67,8 @@ export default {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
-      'GOOGLE_ANALYTICS_TRACKING_NUMBER': JSON.stringify(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER)
+      'GOOGLE_ANALYTICS_TRACKING_NUMBER': JSON.stringify(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER),
+      'TOKEN_ENCRYPTION_KEY': JSON.stringify('development')
     })
   ]
 }

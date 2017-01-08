@@ -1,7 +1,5 @@
 import crypto from 'crypto'
 
-const MASTER_KEY = 'testing123'
-
 const CryptoUtil = {
   encrypt: (userId, password) => {
     try {
@@ -59,7 +57,7 @@ const CryptoUtil = {
   },
 
   getKey: (salt) => {
-    return crypto.pbkdf2Sync(MASTER_KEY, salt, 2145, 32, 'sha512')
+    return crypto.pbkdf2Sync(TOKEN_ENCRYPTION_KEY, salt, 2145, 32, 'sha512')
   }
 }
 
