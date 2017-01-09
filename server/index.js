@@ -42,6 +42,10 @@ if (isDevelopment) {
 } else {
   app.use(express.static(path.join(__dirname, '..', 'dist')))
   app.get('/', (req, res) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(301, `https://${res.get('Host')}${req.url}`)
+    }
+
     res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'))
   })
 }
