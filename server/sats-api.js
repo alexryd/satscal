@@ -1,5 +1,24 @@
 import superagent from 'superagent'
 
+const CACHE = new Map()
+
+const AuthCache = {
+  get(username, password) {
+    const c = CACHE.get(`${username}:${password}`)
+    if (c && new Date().getTime() - c.timestamp < 24 * 60 * 60 * 1000) {
+      return c.data
+    }
+    return null
+  },
+
+  set(username, password, data) {
+    CACHE.set(`${username}:${password}`, {
+      data,
+      timestamp: new Date().getTime()
+    })
+  }
+}
+
 export class SatsApiClient {
   constructor(token=null) {
     this.token = token
@@ -57,6 +76,15 @@ export default class SatsApi {
   }
 
   authenticate(username, password) {
+    const cachedAuth = AuthCache.get(username, password)
+    if (cachedAuth !== null) {
+      console.log(`Auth cache hit for username ${username}`)
+      this.client.token = cachedAuth.token.value
+      return Promise.resolve(cachedAuth)
+    } else {
+      console.log(`Auth cache miss for username ${username}`)
+    }
+
     const data = {
       credentials: {
         login: username,
@@ -65,8 +93,17 @@ export default class SatsApi {
     }
 
     return this.client.post('/auth/token', data).then((res) => {
-      this.client.token = res.body.token.value
-      return res.body
+      const result = res.body
+
+      this.client.token = result.token.value
+      AuthCache.set(username, password, result)
+
+      const userId = result.user.id
+      if (userId && userId !== username) {
+        AuthCache.set(userId, password, result)
+      }
+
+      return result
     })
   }
 
