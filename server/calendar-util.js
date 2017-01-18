@@ -1,4 +1,4 @@
-import ical from 'ical-generator'
+import icalToolkit from 'ical-toolkit'
 
 const TITLES = {
   SATS: {
@@ -43,21 +43,16 @@ const TITLE_HIERARCHY = ['source', 'type', 'subType']
 
 const CalendarUtil = {
   activitiesToIcal(activities) {
-    const cal = ical({
-      name: 'SATS',
-      domain: 'satscal',
-      prodId: {
-        company: 'Alexander Rydén',
-        product: 'satscal',
-        language: 'SV'
-      },
-      ttl: 60 * 60
-    })
+    const cal = icalToolkit.createIcsFileBuilder()
+    cal.calname = 'SATS'
+    cal.prodid = '-//Alexander Rydén//satscal//SV'
+    cal.spacers = false
+    cal.throwError = true
 
     for (const activity of activities) {
       const date = new Date(activity.date)
 
-      cal.createEvent({
+      cal.events.push({
         uid: activity.id,
         start: date,
         stamp: date,
@@ -68,7 +63,7 @@ const CalendarUtil = {
       })
     }
 
-    return cal
+    return cal.toString()
   },
 
   getSummary(activity) {

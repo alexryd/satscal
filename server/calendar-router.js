@@ -23,7 +23,11 @@ calendarRouter.get('/:token', (req, res) => {
       api.getActivities()
         .then((result) => {
           console.log(`${result.activities.length} activities found for user with ID ${userId}`)
-          CalendarUtil.activitiesToIcal(result.activities).serve(res)
+          res.writeHead(200, {
+            'Content-Type': 'text/calendar; charset=utf-8',
+            'Content-Disposition': 'attachment; filename="calendar.ics"'
+          })
+          res.end(CalendarUtil.activitiesToIcal(result.activities))
         })
         .catch((error) => {
           console.error(`Loading activities failed with status code ${error.status}:`,
