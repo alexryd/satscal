@@ -1,5 +1,7 @@
 import icalToolkit from 'ical-toolkit'
 
+import SatsCenters from './sats-centers'
+
 const TITLES = {
   SATS: {
     GROUP: 'subType',
@@ -52,6 +54,11 @@ const CalendarUtil = {
     for (const activity of activities) {
       const date = new Date(activity.date)
 
+      let center = null
+      if (activity.booking !== null && activity.booking.centerId) {
+        center = SatsCenters.get(activity.booking.centerId)
+      }
+
       cal.events.push({
         uid: activity.id,
         start: date,
@@ -59,7 +66,8 @@ const CalendarUtil = {
         end: new Date(date.getTime() + activity.durationInMinutes * 60 * 1000),
         status: (activity.status === 'COMPLETED' ? 'CONFIRMED' : 'TENTATIVE'),
         summary: CalendarUtil.getSummary(activity),
-        description: CalendarUtil.getDescription(activity)
+        description: CalendarUtil.getDescription(activity),
+        location: center && center.name
       })
     }
 

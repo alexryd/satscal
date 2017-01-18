@@ -8,6 +8,7 @@ import apiRouter from './api-router'
 import calendarRouter from './calendar-router'
 import config from '../webpack.config'
 import imageRouter from './image-router'
+import SatsCenters from './sats-centers'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const port = isDevelopment ? 3000 : process.env.PORT
@@ -56,4 +57,6 @@ app.listen(port, '0.0.0.0', (err) => {
     return
   }
   console.info(`Server running on port ${port}`)
+
+  SatsCenters.load()
 })
