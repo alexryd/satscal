@@ -54,21 +54,28 @@ const CalendarUtil = {
     for (const activity of activities) {
       const date = new Date(activity.date)
 
-      let center = null
-      if (activity.booking !== null && activity.booking.centerId) {
-        center = SatsCenters.get(activity.booking.centerId)
-      }
-
-      cal.events.push({
+      const event = {
         uid: activity.id,
         start: date,
         stamp: date,
         end: new Date(date.getTime() + activity.durationInMinutes * 60 * 1000),
         status: (activity.status === 'COMPLETED' ? 'CONFIRMED' : 'TENTATIVE'),
         summary: CalendarUtil.getSummary(activity),
-        description: CalendarUtil.getDescription(activity),
-        location: center && center.name
-      })
+        description: CalendarUtil.getDescription(activity)
+      }
+
+      if (activity.booking !== null && activity.booking.centerId) {
+        const center = SatsCenters.get(activity.booking.centerId)
+        event.location = center.name
+
+        if (center.lat && center.long) {
+          const locationKey = `X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-TITLE="${center.name}"`
+          event.additionalTags = {GEO: `${center.lat};${center.long}`}
+          event.additionalTags[locationKey] = `geo:${center.lat},${center.long}`
+        }
+      }
+
+      cal.events.push(event)
     }
 
     return cal.toString()

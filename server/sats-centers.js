@@ -13,7 +13,9 @@ const SatsCenters = {
         for (const region of result.regions) {
           for (const center of region.centers) {
             CENTERS.set(center.id, {
-              name: center.name
+              name: center.name,
+              long: center.long,
+              lat: center.lat
             })
             count++
           }
