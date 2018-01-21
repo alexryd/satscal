@@ -88,19 +88,17 @@ export default class SatsApi {
     }
 
     const data = {
-      credentials: {
-        login: username,
-        password
-      }
+      userId: username,
+      passWord: password,
     }
 
-    return this.client.post('/auth/token', data).then((res) => {
+    return this.client.post('/auth/login', data).then((res) => {
       const result = res.body
 
-      this.client.token = result.token.value
+      this.client.token = result.token
       AuthCache.set(username, password, result)
 
-      const userId = result.user.id
+      const userId = result.userId
       if (userId && userId !== username) {
         AuthCache.set(userId, password, result)
       }
