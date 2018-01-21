@@ -26,19 +26,30 @@ apiRouter.post('/login', jsonParser, (req, res) => {
 
   api.authenticate(username, password)
     .then((result) => {
-      console.info(`Successfully authenticated user with ID ${result.userId}`)
+      const satsToken = result.token
+      const userId = result.userId
+      console.info(`Successfully authenticated user with ID ${userId}`)
 
-      const token = CryptoUtil.encrypt(result.userId, password)
+      const token = CryptoUtil.encrypt(userId, password)
       if (!token) {
         console.error('No token was returned after encrypting the userId and password')
         return res.status(500).json({error: 'internal_server_error'})
       }
 
-      res.json({
-        user_name: result.userId,
-        token,
-        image_url: `/img/${result.userId}/${result.token}`
-      })
+      api.getUser()
+        .then(result => {
+          console.log(`User "${result.fullName}" loaded`)
+
+          res.json({
+            user_name: result.fullName,
+            token,
+            image_url: `/img/${userId}/${satsToken}`
+          })
+        })
+        .catch(error => {
+          console.error('An error occurred while loading the user:', error)
+          res.status(500).json({error: 'internal_server_error'})
+        })
     })
     .catch((error) => {
       if (error.status === 401) {

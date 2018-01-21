@@ -107,6 +107,12 @@ export default class SatsApi {
     })
   }
 
+  getUser() {
+    return this.client.get('/members/self').then((res) => {
+      return res.body
+    })
+  }
+
   getActivities(startDate=null, endDate=null) {
     const now = new Date()
     let start = startDate || new Date(now.getFullYear() - 1, now.getMonth(), now.getDate())
