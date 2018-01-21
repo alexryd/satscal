@@ -68,10 +68,10 @@ const CalendarUtil = {
         const center = SatsCenters.get(activity.booking.centerId)
         event.location = center.name
 
-        if (center.lat && center.long) {
+        if (center.latitude && center.longitude) {
           const locationKey = `X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-TITLE="${center.name}"`
-          event.additionalTags = {GEO: `${center.lat};${center.long}`}
-          event.additionalTags[locationKey] = `geo:${center.lat},${center.long}`
+          event.additionalTags = {GEO: `${center.latitude};${center.longitude}`}
+          event.additionalTags[locationKey] = `geo:${center.latitude},${center.longitude}`
         }
       }
 

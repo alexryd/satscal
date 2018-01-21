@@ -1,5 +1,6 @@
 import superagent from 'superagent'
 
+const BASE_URL = 'https://hfnapi.sats.com/api/sats'
 const CACHE = new Map()
 
 const AuthCache = {
@@ -25,9 +26,10 @@ export class SatsApiClient {
   }
 
   request(method, uri, data) {
-    const req = superagent[method](`https://www.sats.se/sats-api/se${uri}`)
-    req.accept('json')
-    req.set('User-Agent', 'SATSYou/5 (satscal.herokuapp.com)')
+    const req = superagent[method](BASE_URL + uri)
+    req.accept('application/json')
+    req.set('User-Agent', 'GXBooking/73 (satscal.herokuapp.com)')
+    req.set('X-Preferred-Language', 'sv')
 
     if (data) {
       if (method === 'get') {
@@ -39,10 +41,10 @@ export class SatsApiClient {
     }
 
     if (this.token) {
-      req.set('Authorization', `Bearer ${this.token}`)
+      req.set('X-CookieAuthentication', `Auth-SatsElixia=${this.token}`)
     }
 
-    console.log(`${method.toUpperCase()} https://www.sats.se/sats-api/se${uri}`)
+    console.log(`${method.toUpperCase()} ${BASE_URL}${uri}`)
     return req
   }
 
@@ -120,8 +122,8 @@ export default class SatsApi {
     })
   }
 
-  getCenters() {
-    return this.client.get('/centers').then((res) => {
+  getCenters(country='sweden') {
+    return this.client.get(`/${country}/cluster?clusterType=gxBooking`).then((res) => {
       return res.body
     })
   }
