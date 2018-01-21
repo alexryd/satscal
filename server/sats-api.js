@@ -63,11 +63,11 @@ export class SatsImageClient {
   }
 
   get(userId) {
-    const req = superagent.get(`https://hfnapi.sats.com/api/Sats/members/${userId}/picture`)
+    const req = superagent.get(`${BASE_URL}/members/${userId}/picture`)
     req.accept('*/*')
-    req.set('User-Agent', 'SATSYou/5 (satscal.herokuapp.com)')
+    req.set('User-Agent', 'GXBooking/73 (satscal.herokuapp.com)')
     req.set('Cookie', `Auth-SatsElixia=${this.token}`)
-    console.log(`GET https://hfnapi.sats.com/api/Sats/members/${userId}/picture`)
+    console.log(`GET ${BASE_URL}/members/${userId}/picture`)
     return req
   }
 }
