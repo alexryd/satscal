@@ -120,8 +120,8 @@ export default class SatsApi {
     })
   }
 
-  getCenters(country='sweden') {
-    return this.client.get(`/${country}/cluster?clusterType=gxBooking`).then((res) => {
+  getCenters() {
+    return this.client.get(`/centers?includeOnlyActive=true`).then((res) => {
       return res.body
     })
   }

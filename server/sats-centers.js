@@ -10,16 +10,14 @@ const SatsCenters = {
       .then((result) => {
         let count = 0
 
-        for (const region of result) {
-          for (const center of region.centers) {
-            CENTERS.set(center.exerpCenterId, {
-              name: center.name,
-              longitude: center.longitude,
-              latitude: center.latitude,
-              postalAddress: center.postalAddress,
-            })
-            count++
-          }
+        for (const center of result) {
+          CENTERS.set(center.exerpCenterId, {
+            name: center.name,
+            longitude: center.longitude,
+            latitude: center.latitude,
+            postalAddress: center.postalAddress,
+          })
+          count++
         }
 
         console.log(`${count} SATS centers loaded`)
