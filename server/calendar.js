@@ -2,11 +2,23 @@ import icalToolkit from 'ical-toolkit'
 
 import SatsCenters from './sats-centers'
 
-const getActivityDescription = activity => {
+const getDescription = activity => {
   const description = []
 
   if (activity.instructor) {
     description.push(`Instruktör: ${activity.instructor}`)
+  }
+
+  if (activity.roomName) {
+    description.push(`Sal: ${activity.roomName}`)
+  }
+
+  if (activity.capacity && activity.bookedCount) {
+    description.push(`${activity.bookedCount}/${activity.capacity} platser bokade`)
+  }
+
+  if (activity.waitingListIndex) {
+    description.push(`Du är nummer ${activity.waitingListIndex} på väntelistan`)
   }
 
   if (activity.distance) {
@@ -21,6 +33,12 @@ const getActivityDescription = activity => {
   }
 
   return description.join('\n')
+}
+
+const addDates = (activity, event) => {
+  event.start = new Date(activity.startTime)
+  event.stamp = new Date(activity.date)
+  event.end = new Date(activity.endTime)
 }
 
 const addLocation = (activity, event) => {
@@ -54,15 +72,29 @@ class Calendar {
 
       const event = {
         uid: activity.id,
-        start: new Date(activity.startTime),
-        stamp: new Date(activity.date),
-        end: new Date(activity.endTime),
         status: 'CONFIRMED',
         summary: activity.activityName,
-        description: getActivityDescription(activity),
+        description: getDescription(activity),
       }
 
+      addDates(activity, event)
       addLocation(activity, event)
+
+      this.builder.events.push(event)
+    }
+  }
+
+  addBookings(bookings) {
+    for (const booking of bookings) {
+      const event = {
+        uid: booking.bookingId,
+        status: booking.state === 'OVERBOOKED_WAITINGLIST' ? 'TENTATIVE' : 'CONFIRMED',
+        summary: booking.activityName,
+        description: getDescription(booking),
+      }
+
+      addDates(booking, event)
+      addLocation(booking, event)
 
       this.builder.events.push(event)
     }

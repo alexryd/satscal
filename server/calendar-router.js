@@ -6,6 +6,35 @@ import SatsApi from './sats-api'
 
 const calendarRouter = express.Router()
 
+const getActivities = api => {
+  return api.getActivities()
+    .then(result => {
+      return result.results
+    })
+    .catch(error => {
+      if (error.response) {
+        console.error(`Loading activities failed with status code ${error.status}:`,
+          error.response.body)
+      } else {
+        console.error('An error occurred while loading activities:', error)
+      }
+      return []
+    })
+}
+
+const getBookings = api => {
+  return api.getBookings()
+    .catch(error => {
+      if (error.response) {
+        console.error(`Loading bookings failed with status code ${error.status}:`,
+          error.response.body)
+      } else {
+        console.error('An error occurred while loading bookings:', error)
+      }
+      return []
+    })
+}
+
 calendarRouter.get('/:token', (req, res) => {
   const token = req.params.token
   const {userId, password} = CryptoUtil.decrypt(token)
@@ -20,10 +49,15 @@ calendarRouter.get('/:token', (req, res) => {
 
   api.authenticate(userId, password)
     .then(() => {
-      api.getActivities()
-        .then((result) => {
-          const calendar = new Calendar()
-          calendar.addActivities(result.results)
+      const calendar = new Calendar()
+
+      getActivities(api)
+        .then(activities => {
+          calendar.addActivities(activities)
+          return getBookings(api)
+        })
+        .then(bookings => {
+          calendar.addBookings(bookings)
 
           console.log(`${calendar.length} activities found for user with ID ${userId}`)
           res.writeHead(200, {
@@ -31,16 +65,6 @@ calendarRouter.get('/:token', (req, res) => {
             'Content-Disposition': 'attachment; filename="calendar.ics"'
           })
           res.end(calendar.toString())
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.error(`Loading activities failed with status code ${error.status}:`,
-              error.response.body)
-            res.sendStatus(500)
-          } else {
-            console.error('An error occurred while loading activities:', error)
-            res.sendStatus(500)
-          }
         })
     })
     .catch((error) => {

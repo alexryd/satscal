@@ -1,6 +1,6 @@
 import superagent from 'superagent'
 
-const BASE_URL = 'https://hfnapi.sats.com/api/sats'
+const BASE_URL = 'https://hfnapi.sats.com/api'
 const CACHE = new Map()
 
 const AuthCache = {
@@ -49,11 +49,19 @@ export class SatsApiClient {
   }
 
   get(uri, data=null) {
-    return this.request('get', uri, data)
+    return this.request('get', '/sats' + uri, data)
   }
 
   post(uri, data=null) {
-    return this.request('post', uri, data)
+    return this.request('post', '/sats' + uri, data)
+  }
+
+  getV2(uri, data=null) {
+    return this.request('get', '/v2/sats' + uri, data)
+  }
+
+  postV2(uri, data=null) {
+    return this.request('post', '/v2/sats' + uri, data)
   }
 }
 
@@ -63,11 +71,11 @@ export class SatsImageClient {
   }
 
   get(userId) {
-    const req = superagent.get(`${BASE_URL}/members/${userId}/picture`)
+    const req = superagent.get(`${BASE_URL}sats/members/${userId}/picture`)
     req.accept('*/*')
     req.set('User-Agent', 'GXBooking/73 (satscal.herokuapp.com)')
     req.set('Cookie', `Auth-SatsElixia=${this.token}`)
-    console.log(`GET ${BASE_URL}/members/${userId}/picture`)
+    console.log(`GET ${BASE_URL}sats/members/${userId}/picture`)
     return req
   }
 }
@@ -115,6 +123,12 @@ export default class SatsApi {
 
   getActivities(interval='12m') {
     return this.client.get(`/activities?interval=${interval}`).then((res) => {
+      return res.body
+    })
+  }
+
+  getBookings() {
+    return this.client.getV2(`/members/booking`).then(res => {
       return res.body
     })
   }
