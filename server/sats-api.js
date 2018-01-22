@@ -113,15 +113,8 @@ export default class SatsApi {
     })
   }
 
-  getActivities(startDate=null, endDate=null) {
-    const now = new Date()
-    let start = startDate || new Date(now.getFullYear() - 1, now.getMonth(), now.getDate())
-    let end = endDate || new Date(now.getFullYear(), now.getMonth(), now.getDate() + 8 * 7)
-
-    start = start.toISOString().substring(0, 10).replace(/-/g, '')
-    end = end.toISOString().substring(0, 10).replace(/-/g, '')
-
-    return this.client.get(`/training/activities/${start},${end}`).then((res) => {
+  getActivities(interval='12m') {
+    return this.client.get(`/activities?interval=${interval}`).then((res) => {
       return res.body
     })
   }
