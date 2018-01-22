@@ -17,7 +17,9 @@ const getDescription = activity => {
     description.push(`${activity.bookedCount}/${activity.capacity} platser bokade`)
   }
 
-  if (activity.waitingListIndex) {
+  if (activity.waitingListIndex && activity.waitingListTotal) {
+    description.push(`Du är nummer ${activity.waitingListIndex}/${activity.waitingListTotal} på väntelistan`)
+  } else if (activity.waitingListIndex) {
     description.push(`Du är nummer ${activity.waitingListIndex} på väntelistan`)
   }
 
