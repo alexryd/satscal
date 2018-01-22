@@ -35,10 +35,27 @@ const getDescription = activity => {
   return description.join('\n')
 }
 
+const isValidDate = value => {
+  return value && parseInt(value.substr(0, 4)) > 1
+}
+
 const addDates = (activity, event) => {
-  event.start = new Date(activity.startTime)
-  event.stamp = new Date(activity.date)
-  event.end = new Date(activity.endTime)
+  const date = new Date(activity.date)
+  event.stamp = date
+
+  if (isValidDate(activity.startTime)) {
+    event.start = new Date(activity.startTime)
+  } else {
+    event.start = date
+  }
+
+  if (isValidDate(activity.endTime)) {
+    event.end = new Date(activity.endTime)
+  } else if (activity.duration) {
+    event.end = new Date(date.getTime() + 1000 * 60 * activity.duration)
+  } else {
+    event.end = date
+  }
 }
 
 const addLocation = (activity, event) => {
