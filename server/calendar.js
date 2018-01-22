@@ -63,10 +63,17 @@ const addDates = (activity, event) => {
 const addLocation = (activity, event) => {
   const center = SatsCenters.get(activity.centerId)
   if (center) {
-    event.location = center.name
+    let name = center.name
+    if (center.postalAddress) {
+      const a = center.postalAddress
+      name += `\n${a.address}, ${a.postalCode} ${a.postalArea}, ${a.country}`
+    }
+
+    event.location = name
 
     if (center.latitude && center.longitude) {
-      const locationKey = `X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-TITLE="${center.name}"`
+      const title = name.replace(/\n/g, '\\n')
+      const locationKey = `X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-TITLE="${title}"`
       event.additionalTags = {GEO: `${center.latitude};${center.longitude}`}
       event.additionalTags[locationKey] = `geo:${center.latitude},${center.longitude}`
     }
