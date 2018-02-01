@@ -69,7 +69,7 @@ calendarRouter.get('/:token', (req, res) => {
     })
     .catch((error) => {
       if (error.status === 401) {
-        console.warn(`Authentication failed for used with ID ${userId}`)
+        console.warn(`Authentication failed for user with ID ${userId}`)
         res.sendStatus(401)
       } else if (error.response) {
         console.error(`Authentication failed with status code ${error.status}:`,
