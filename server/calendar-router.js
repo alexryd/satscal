@@ -1,4 +1,5 @@
 import express from 'express'
+import ua from 'universal-analytics'
 
 import Calendar from './calendar'
 import CryptoUtil from './crypto-util'
@@ -39,6 +40,7 @@ calendarRouter.get('/:token', (req, res) => {
   const token = req.params.token
   const {userId, password} = CryptoUtil.decrypt(token)
   const api = new SatsApi()
+  const visitor = ua(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER)
 
   if (!userId || !password) {
     console.error('Empty userId or password returned after decrypting', {userId, password})
@@ -58,6 +60,8 @@ calendarRouter.get('/:token', (req, res) => {
         })
         .then(bookings => {
           calendar.addBookings(bookings)
+
+          visitor.pageview(req.originalUrl).send()
 
           console.log(`${calendar.length} activities found for user with ID ${userId}`)
           res.writeHead(200, {
