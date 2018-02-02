@@ -16,8 +16,10 @@ const getActivities = api => {
       if (error.response) {
         console.error(`Loading activities failed with status code ${error.status}:`,
           error.response.body)
+        req.visitor.exception(`Load activities error (${error.status})`)
       } else {
         console.error('An error occurred while loading activities:', error)
+        req.visitor.exception('Load activities error')
       }
       return []
     })
@@ -29,8 +31,10 @@ const getBookings = api => {
       if (error.response) {
         console.error(`Loading bookings failed with status code ${error.status}:`,
           error.response.body)
+        req.visitor.exception(`Load bookings error (${error.status})`)
       } else {
         console.error('An error occurred while loading bookings:', error)
+        req.visitor.exception('Load bookings error')
       }
       return []
     })
@@ -45,6 +49,7 @@ calendarRouter.get('/:token', (req, res) => {
 
   if (!userId || !password) {
     console.error('Empty userId or password returned after decrypting', {userId, password})
+    req.visitor.exception('Token decryption error')
     return res.sendStatus(500)
   }
 
@@ -81,13 +86,16 @@ calendarRouter.get('/:token', (req, res) => {
     .catch((error) => {
       if (error.status === 401) {
         console.warn(`Authentication failed for user with ID ${userId}`)
+        req.visitor.exception('Authentication failed')
         res.sendStatus(401)
       } else if (error.response) {
         console.error(`Authentication failed with status code ${error.status}:`,
           error.response.body)
+        req.visitor.exception(`Authentication error (${error.status})`)
         res.sendStatus(500)
       } else {
         console.error('An error occurred during authentication:', error)
+        req.visitor.exception('Authentication error')
         res.sendStatus(500)
       }
     })
