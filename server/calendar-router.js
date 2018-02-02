@@ -36,11 +36,26 @@ const getBookings = api => {
     })
 }
 
+calendarRouter.use((req, res, next) => {
+  req.visitor = ua(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER)
+
+  const sendHandler = () => {
+    res.removeListener('finish', sendHandler)
+    res.removeListener('close', sendHandler)
+
+    req.visitor.send()
+  }
+
+  res.on('finish', sendHandler)
+  res.on('close', sendHandler)
+
+  next()
+})
+
 calendarRouter.get('/:token', (req, res) => {
   const token = req.params.token
   const {userId, password} = CryptoUtil.decrypt(token)
   const api = new SatsApi()
-  const visitor = ua(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER)
 
   if (!userId || !password) {
     console.error('Empty userId or password returned after decrypting', {userId, password})
@@ -61,7 +76,7 @@ calendarRouter.get('/:token', (req, res) => {
         .then(bookings => {
           calendar.addBookings(bookings)
 
-          visitor.pageview(req.originalUrl).send()
+          req.visitor.pageview(req.originalUrl)
 
           console.log(`${calendar.length} activities found for user with ID ${userId}`)
           res.writeHead(200, {
