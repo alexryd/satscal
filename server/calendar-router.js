@@ -65,6 +65,12 @@ calendarRouter.get('/:token', (req, res) => {
           calendar.addBookings(bookings)
 
           console.log(`${calendar.length} activities found for user with ID ${userId}`)
+          req.visitor.event({
+            ec: 'Calendar',
+            ea: 'Loaded activities',
+            ev: calendar.length,
+          })
+
           res.writeHead(200, {
             'Content-Type': 'text/calendar; charset=utf-8',
             'Content-Disposition': 'attachment; filename="calendar.ics"'
