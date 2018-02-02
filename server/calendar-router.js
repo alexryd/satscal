@@ -7,7 +7,7 @@ import SatsApi from './sats-api'
 
 const calendarRouter = express.Router()
 
-const getActivities = api => {
+const getActivities = (req, api) => {
   return api.getActivities()
     .then(result => {
       return result.results
@@ -25,7 +25,7 @@ const getActivities = api => {
     })
 }
 
-const getBookings = api => {
+const getBookings = (req, api) => {
   return api.getBookings()
     .catch(error => {
       if (error.response) {
@@ -64,10 +64,10 @@ calendarRouter.get('/:token', (req, res) => {
     .then(() => {
       const calendar = new Calendar()
 
-      getActivities(api)
+      getActivities(req, api)
         .then(activities => {
           calendar.addActivities(activities)
-          return getBookings(api)
+          return getBookings(req, api)
         })
         .then(bookings => {
           calendar.addBookings(bookings)
