@@ -67,6 +67,7 @@ calendarRouter.get('/:token', (req, res) => {
 
   console.info(`Calendar requested for user with ID ${userId}`)
   req.visitor.set('uid', userId)
+  req.visitor.pageview(req.originalUrl)
 
   api.authenticate(userId, password)
     .then(() => {
@@ -79,8 +80,6 @@ calendarRouter.get('/:token', (req, res) => {
         })
         .then(bookings => {
           calendar.addBookings(bookings)
-
-          req.visitor.pageview(req.originalUrl)
 
           console.log(`${calendar.length} activities found for user with ID ${userId}`)
           res.writeHead(200, {
