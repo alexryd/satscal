@@ -42,15 +42,14 @@ calendarRouter.use((req, res, next) => {
   v.set('ua', req.headers['user-agent'])
   v.set('ul', req.headers['accept-language'])
 
-  const sendHandler = () => {
-    res.removeListener('finish', sendHandler)
-    res.removeListener('close', sendHandler)
-
+  const endMethod = res.end
+  res.end = (...args) => {
+    // override the end() method to send the GA request when the router
+    // has finished handling the request
     v.send()
+    res.end = endMethod
+    res.end.apply(res, args)
   }
-
-  res.on('finish', sendHandler)
-  res.on('close', sendHandler)
 
   next()
 })
