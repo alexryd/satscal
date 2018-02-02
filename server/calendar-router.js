@@ -37,13 +37,16 @@ const getBookings = api => {
 }
 
 calendarRouter.use((req, res, next) => {
-  req.visitor = ua(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER)
+  const v = req.visitor = ua(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER)
+  v.set('uip', req.headers['x-forwarded-for'] || req.connection.remoteAddress)
+  v.set('ua', req.headers['user-agent'])
+  v.set('ul', req.headers['accept-language'])
 
   const sendHandler = () => {
     res.removeListener('finish', sendHandler)
     res.removeListener('close', sendHandler)
 
-    req.visitor.send()
+    v.send()
   }
 
   res.on('finish', sendHandler)
