@@ -63,9 +63,10 @@ calendarRouter.get('/:token', (req, res) => {
   if (!userId || !password) {
     console.error('Empty userId or password returned after decrypting', {userId, password})
     return res.sendStatus(500)
-  } else {
-    console.info(`Calendar requested for user with ID ${userId}`)
   }
+
+  console.info(`Calendar requested for user with ID ${userId}`)
+  req.visitor.set('uid', userId)
 
   api.authenticate(userId, password)
     .then(() => {
