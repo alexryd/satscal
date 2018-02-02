@@ -1,6 +1,6 @@
 {
   "name": "satscal",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Allows SATS members to generate iCalendars with the classes they've booked",
   "main": "server/index.js",
   "scripts": {
