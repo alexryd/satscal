@@ -8,6 +8,7 @@ import apiRouter from './api-router'
 import calendarRouter from './calendar-router'
 import config from '../webpack.config'
 import imageRouter from './image-router'
+import legacyRouter from './legacy-router'
 import SatsCenters from './sats-centers'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -15,6 +16,7 @@ const port = isDevelopment ? 3000 : process.env.PORT
 
 const app = express()
 app.use('/api', apiRouter)
+app.use('/bookings', legacyRouter)
 app.use('/cal', calendarRouter)
 app.use('/img', imageRouter)
 

@@ -133,6 +133,14 @@ class Calendar {
   toString() {
     return this.builder.toString()
   }
+
+  send(res) {
+    res.writeHead(200, {
+      'Content-Type': 'text/calendar; charset=utf-8',
+      'Content-Disposition': 'attachment; filename="calendar.ics"'
+    })
+    res.end(this.toString())
+  }
 }
 
 export default Calendar

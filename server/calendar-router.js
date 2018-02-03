@@ -41,14 +41,6 @@ const getBookings = (req, api) => {
     })
 }
 
-const sendCalendar = (res, calendar) => {
-  res.writeHead(200, {
-    'Content-Type': 'text/calendar; charset=utf-8',
-    'Content-Disposition': 'attachment; filename="calendar.ics"'
-  })
-  res.end(calendar.toString())
-}
-
 calendarRouter.use(gaMiddleware)
 
 calendarRouter.get('/:token', (req, res) => {
@@ -88,14 +80,14 @@ calendarRouter.get('/:token', (req, res) => {
             ev: calendar.length,
           })
 
-          sendCalendar(res, calendar)
+          calendar.send(res)
         })
     })
     .catch((error) => {
       if (error.status === 401) {
         console.warn(`Authentication failed for user with ID ${userId}`)
         req.visitor.exception('Authentication failed')
-        sendCalendar(res, new AuthenticationFailedCalendar())
+        new AuthenticationFailedCalendar().send(res)
       } else if (error.response) {
         console.error(`Authentication failed with status code ${error.status}:`,
           error.response.body)

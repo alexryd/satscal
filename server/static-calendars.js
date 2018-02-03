@@ -33,3 +33,29 @@ export class AuthenticationFailedCalendar extends Calendar {
     this.builder.events.push(event)
   }
 }
+
+export class LegacyRequestCalendar extends Calendar {
+  constructor() {
+    super()
+    this.addMessage()
+  }
+
+  addMessage() {
+    const description = 'Den här prenumerationen av dina SATS-bokningar ' +
+                        'stöds inte längre. Gå till ' +
+                        'https://satscal.herokuapp.com/ och skapa en ny länk.'
+
+    const event = {
+      uid: 'legacy-request-message',
+      status: 'TENTATIVE',
+      summary: 'Förnya din prenumeration',
+      description,
+      url: 'https://satscal.herokuapp.com/',
+      stamp: getDateAtHour(12),
+      start: getDateAtHour(12),
+      end: getDateAtHour(13),
+    }
+
+    this.builder.events.push(event)
+  }
+}
