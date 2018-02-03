@@ -1,5 +1,3 @@
-import autoprefixer from 'autoprefixer'
-import flexbugs from 'postcss-flexbugs-fixes'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import path from 'path'
 import webpack from 'webpack'
@@ -21,40 +19,31 @@ export default {
   },
 
   resolve: {
-    fallback: nodeModulesPath,
-    extensions: ['', '.css', '.scss', '.js', '.jsx'],
+    modules: [ nodeModulesPath ],
+    extensions: ['.css', '.scss', '.js', '.jsx'],
     alias: {
       app: path.join(__dirname, 'app')
     }
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.scss$/,
-        loaders: [
-          'style',
-          'css?minimize&-autoprefixer',
+        use: [
+          'style-loader',
+          'css-loader?minimize',
           'postcss-loader',
-          'sass'
-        ]
+          'sass-loader',
+        ],
       },
-      {test: /\.js$|\.jsx$/, loader: 'babel', exclude: [nodeModulesPath]}
+      {
+        test: /\.js$|\.jsx$/,
+        use: [ 'babel-loader' ],
+        exclude: [ nodeModulesPath ],
+      }
     ]
   },
-
-  postcss: [
-    flexbugs,
-    autoprefixer({
-      browsers: [
-        'last 2 versions',
-        'Android 4',
-        'iOS 8',
-        'ie 10',
-        'ie_mob 10'
-      ]
-    })
-  ],
 
   plugins: [
     new HtmlWebpackPlugin({
@@ -62,9 +51,8 @@ export default {
       inject: 'body',
       filename: 'index.html'
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
       'GOOGLE_ANALYTICS_TRACKING_NUMBER': JSON.stringify(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER)

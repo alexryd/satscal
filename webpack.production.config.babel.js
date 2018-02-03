@@ -11,8 +11,6 @@ config.entry = path.join(__dirname, 'app', 'main')
 config.output.filename = '[name]-[hash].min.js'
 
 config.plugins = [
-  new webpack.optimize.OccurenceOrderPlugin(),
-  new webpack.optimize.DedupePlugin(),
   new HtmlWebpackPlugin({
     template: 'app/index.tpl.html',
     inject: 'body',
