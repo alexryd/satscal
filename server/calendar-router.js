@@ -1,5 +1,6 @@
 import express from 'express'
 
+import { AuthenticationFailedCalendar } from './static-calendars'
 import Calendar from './calendar'
 import CryptoUtil from './crypto-util'
 import gaMiddleware from './ga-middleware'
@@ -38,6 +39,14 @@ const getBookings = (req, api) => {
       }
       return []
     })
+}
+
+const sendCalendar = (res, calendar) => {
+  res.writeHead(200, {
+    'Content-Type': 'text/calendar; charset=utf-8',
+    'Content-Disposition': 'attachment; filename="calendar.ics"'
+  })
+  res.end(calendar.toString())
 }
 
 calendarRouter.use(gaMiddleware)
@@ -79,18 +88,14 @@ calendarRouter.get('/:token', (req, res) => {
             ev: calendar.length,
           })
 
-          res.writeHead(200, {
-            'Content-Type': 'text/calendar; charset=utf-8',
-            'Content-Disposition': 'attachment; filename="calendar.ics"'
-          })
-          res.end(calendar.toString())
+          sendCalendar(res, calendar)
         })
     })
     .catch((error) => {
       if (error.status === 401) {
         console.warn(`Authentication failed for user with ID ${userId}`)
         req.visitor.exception('Authentication failed')
-        res.sendStatus(401)
+        sendCalendar(res, new AuthenticationFailedCalendar())
       } else if (error.response) {
         console.error(`Authentication failed with status code ${error.status}:`,
           error.response.body)
