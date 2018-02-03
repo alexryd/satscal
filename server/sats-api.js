@@ -71,11 +71,11 @@ export class SatsImageClient {
   }
 
   get(userId) {
-    const req = superagent.get(`${BASE_URL}sats/members/${userId}/picture`)
+    const url = `${BASE_URL}/sats/members/${userId}/picture?cookie_token=${this.token}`
+    const req = superagent.get(url)
     req.accept('*/*')
     req.set('User-Agent', 'GXBooking/73 (satscal.herokuapp.com)')
-    req.set('Cookie', `Auth-SatsElixia=${this.token}`)
-    console.log(`GET ${BASE_URL}sats/members/${userId}/picture`)
+    console.log(`GET ${BASE_URL}/sats/members/${userId}/picture`)
     return req
   }
 }
