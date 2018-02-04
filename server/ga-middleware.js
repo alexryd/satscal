@@ -14,7 +14,17 @@ const trackException = function(message, error) {
 }
 
 const gaMiddleware = (req, res, next) => {
-  const v = req.visitor = ua(process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER)
+  let cid = null
+  if (req.cookies && req.cookies._ga) {
+    const parts = req.cookies._ga.split('.')
+    cid = parts[2] + '.' + parts[3]
+  }
+
+  const v = req.visitor = ua(
+    process.env.GOOGLE_ANALYTICS_TRACKING_NUMBER,
+    cid
+  )
+
   v.set('uip', req.headers['x-forwarded-for'] || req.connection.remoteAddress)
   v.set('ua', req.headers['user-agent'])
   v.set('ul', req.headers['accept-language'])

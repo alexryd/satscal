@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser'
 import express from 'express'
 import path from 'path'
 import webpack from 'webpack'
@@ -15,6 +16,8 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 const port = isDevelopment ? 3000 : process.env.PORT
 
 const app = express()
+app.use(cookieParser())
+
 app.use('/api', apiRouter)
 app.use('/bookings', legacyRouter)
 app.use('/cal', calendarRouter)
