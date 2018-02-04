@@ -88,11 +88,11 @@ export default class SatsApi {
   authenticate(username, password) {
     const cachedAuth = AuthCache.get(username, password)
     if (cachedAuth !== null) {
-      console.log(`Auth cache hit for username ${username}`)
+      console.log(`Auth cache hit for username "${username}"`)
       this.client.token = cachedAuth.token
       return Promise.resolve(cachedAuth)
     } else {
-      console.log(`Auth cache miss for username ${username}`)
+      console.log(`Auth cache miss for username "${username}"`)
     }
 
     const data = {
