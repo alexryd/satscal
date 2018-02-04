@@ -61,8 +61,7 @@ apiRouter.post('/login', jsonParser, (req, res) => {
           })
         })
         .catch(error => {
-          console.error('An error occurred while loading the user:', error)
-          req.visitor.exception('Load user error')
+          req.trackException('Load user error', error)
           res.status(500).json({error: 'internal_server_error'})
         })
     })
@@ -71,14 +70,8 @@ apiRouter.post('/login', jsonParser, (req, res) => {
         console.log(`Wrong password supplied for username "${username}"`)
         req.visitor.exception('Authentication failed')
         res.status(401).json({error: 'invalid_username_or_password'})
-      } else if (error.response) {
-        console.error(`Authentication failed with status code ${error.status}:`,
-          error.response.body)
-        req.visitor.exception(`Authentication error (${error.status})`)
-        res.status(500).json({error: 'internal_server_error'})
       } else {
-        console.error('An error occurred during authentication:', error)
-        req.visitor.exception('Authentication error')
+        req.trackException('Authentication error', error)
         res.status(500).json({error: 'internal_server_error'})
       }
     })

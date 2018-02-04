@@ -14,14 +14,7 @@ const getActivities = (req, api) => {
       return result.results
     })
     .catch(error => {
-      if (error.response) {
-        console.error(`Loading activities failed with status code ${error.status}:`,
-          error.response.body)
-        req.visitor.exception(`Load activities error (${error.status})`)
-      } else {
-        console.error('An error occurred while loading activities:', error)
-        req.visitor.exception('Load activities error')
-      }
+      req.trackException('Load activities error', error)
       return []
     })
 }
@@ -29,14 +22,7 @@ const getActivities = (req, api) => {
 const getBookings = (req, api) => {
   return api.getBookings()
     .catch(error => {
-      if (error.response) {
-        console.error(`Loading bookings failed with status code ${error.status}:`,
-          error.response.body)
-        req.visitor.exception(`Load bookings error (${error.status})`)
-      } else {
-        console.error('An error occurred while loading bookings:', error)
-        req.visitor.exception('Load bookings error')
-      }
+      req.trackException('Load bookings error', error)
       return []
     })
 }
@@ -88,14 +74,8 @@ calendarRouter.get('/:token', (req, res) => {
         console.warn(`Authentication failed for user with ID ${userId}`)
         req.visitor.exception('Authentication failed')
         new AuthenticationFailedCalendar().send(res)
-      } else if (error.response) {
-        console.error(`Authentication failed with status code ${error.status}:`,
-          error.response.body)
-        req.visitor.exception(`Authentication error (${error.status})`)
-        res.sendStatus(500)
       } else {
-        console.error('An error occurred during authentication:', error)
-        req.visitor.exception('Authentication error')
+        req.trackException('Authentication error', error)
         res.sendStatus(500)
       }
     })
