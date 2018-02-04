@@ -27,6 +27,10 @@ export class SatsApiClient {
 
   request(method, uri, data) {
     const req = superagent[method](BASE_URL + uri)
+    req.timeout({
+      response: 15000,
+      deadline: 30000,
+    })
     req.accept('application/json')
     req.set('User-Agent', 'GXBooking/73 (satscal.herokuapp.com)')
     req.set('X-Preferred-Language', 'sv')
