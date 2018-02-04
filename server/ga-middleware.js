@@ -18,6 +18,7 @@ const gaMiddleware = (req, res, next) => {
   v.set('uip', req.headers['x-forwarded-for'] || req.connection.remoteAddress)
   v.set('ua', req.headers['user-agent'])
   v.set('ul', req.headers['accept-language'])
+  v.set('dp', req.originalUrl)
 
   const endMethod = res.end
   res.end = (...args) => {

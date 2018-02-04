@@ -13,10 +13,8 @@ imageRouter.get('/:userId/:token', (req, res) => {
 
   console.info(`Image requested for user with ID ${userId}`)
   req.visitor.set('uid', userId)
-  req.visitor.pageview({
-    dp: req.originalUrl,
-    dt: `Image for ${userId}`,
-  })
+  req.visitor.set('dt', `Image for ${userId}`)
+  req.visitor.pageview()
 
   const client = new SatsImageClient(token)
   client.get(userId).pipe(res)

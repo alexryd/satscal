@@ -26,10 +26,8 @@ apiRouter.post('/login', jsonParser, (req, res) => {
   }
 
   console.info(`Login requested for username "${username}"`)
-  req.visitor.pageview({
-    dp: req.originalUrl,
-    dt: `Authenticating ${username}`,
-  })
+  req.visitor.set('dt', `Authenticating ${username}`)
+  req.visitor.pageview()
 
   api.authenticate(username, password)
     .then((result) => {

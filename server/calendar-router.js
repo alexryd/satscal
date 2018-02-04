@@ -42,10 +42,8 @@ calendarRouter.get('/:token', (req, res) => {
 
   console.info(`Calendar requested for user with ID ${userId}`)
   req.visitor.set('uid', userId)
-  req.visitor.pageview({
-    dp: req.originalUrl,
-    dt: `Calendar for ${userId}`,
-  })
+  req.visitor.set('dt', `Calendar for ${userId}`)
+  req.visitor.pageview()
 
   api.authenticate(userId, password)
     .then(() => {

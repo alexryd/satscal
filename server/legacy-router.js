@@ -9,10 +9,8 @@ legacyRouter.use(gaMiddleware)
 
 legacyRouter.get('/current', (req, res) => {
   console.info('Legacy calendar request received')
-  req.visitor.pageview({
-    dp: req.originalUrl,
-    dt: 'Legacy calendar',
-  })
+  req.visitor.set('dt', 'Legacy calendar')
+  req.visitor.pageview()
 
   new LegacyRequestCalendar().send(res)
 })
