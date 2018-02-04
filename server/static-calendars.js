@@ -1,11 +1,5 @@
 import Calendar from './calendar'
 
-const getDateAtHour = hour => {
-  const d = new Date()
-  d.setHours(hour, 0, 0, 0)
-  return d
-}
-
 export class AuthenticationFailedCalendar extends Calendar {
   constructor() {
     super()
@@ -19,15 +13,17 @@ export class AuthenticationFailedCalendar extends Calendar {
                         'fungera. Gå till https://satscal.herokuapp.com/ ' +
                         'och skapa en ny länk.'
 
+    const now = new Date()
     const event = {
       uid: 'authentication-failed-message',
       status: 'TENTATIVE',
       summary: 'Förnya din prenumeration',
       description,
       url: 'https://satscal.herokuapp.com/',
-      stamp: getDateAtHour(12),
-      start: getDateAtHour(12),
-      end: getDateAtHour(13),
+      stamp: now,
+      start: now,
+      end: now,
+      allDay: true,
     }
 
     this.builder.events.push(event)
@@ -45,15 +41,17 @@ export class LegacyRequestCalendar extends Calendar {
                         'stöds inte längre. Gå till ' +
                         'https://satscal.herokuapp.com/ och skapa en ny länk.'
 
+    const now = new Date()
     const event = {
       uid: 'legacy-request-message',
       status: 'TENTATIVE',
       summary: 'Förnya din prenumeration',
       description,
       url: 'https://satscal.herokuapp.com/',
-      stamp: getDateAtHour(12),
-      start: getDateAtHour(12),
-      end: getDateAtHour(13),
+      stamp: now,
+      start: now,
+      end: now,
+      allDay: true,
     }
 
     this.builder.events.push(event)
