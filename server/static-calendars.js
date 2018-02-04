@@ -37,7 +37,7 @@ export class LegacyRequestCalendar extends Calendar {
   }
 
   addMessage() {
-    const description = 'Den här prenumerationen av dina SATS-bokningar ' +
+    const description = 'Den här prenumerationen av dina SATS-pass ' +
                         'stöds inte längre. Gå till ' +
                         'https://satscal.herokuapp.com/ och skapa en ny länk.'
 
